@@ -11,10 +11,12 @@ contract("TestUniswap", (accounts) => {
     const BUSD = "0x4Fabb145d64652a948d72533023f6E7A623C7C53"
     const WETH = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
 
+    const SUSHI = "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2";
+
   const WHALE = DAI_WHALE;
   const AMOUNT_IN = 100000;
   const AMOUNT_OUT_MIN = 1;
-  const TOKEN_IN = BUSD;
+  const TOKEN_IN = DAI;//BUSD;
   const TOKEN_OUT = WETH;
   const TO = accounts[0];
 
@@ -81,6 +83,7 @@ beforeEach(async () => {
 });
 
 it("should pass", async () => {
+  console.log(`out ${await tokenOut.balanceOf(TO)}`);
   await testUniswap.swap(
     tokenIn.address,
     tokenOut.address,

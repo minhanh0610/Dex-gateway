@@ -6,11 +6,9 @@ pragma solidity >=0.4.22 <0.9.0;
 import "./interfaces/IERC20.sol";
 import "./interfaces/Uniswap.sol";
 
-contract TestUniswap {
-  // address private constant UNISWAP_V2_ROUTER =
-  //   0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
-    address private constant UNISWAP_V2_ROUTER =
-      0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
+contract TestSushi {
+    address private constant SUSHI_ROUTER =
+      0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F;
   address private constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
   function swap(
@@ -21,7 +19,7 @@ contract TestUniswap {
     address _to
   ) external {
     IERC20(_tokenIn).transferFrom(msg.sender, address(this), _amountIn);
-    IERC20(_tokenIn).approve(UNISWAP_V2_ROUTER, _amountIn);
+    IERC20(_tokenIn).approve(SUSHI_ROUTER, _amountIn);
 
     address[] memory path;
     if (_tokenIn == WETH || _tokenOut == WETH) {
@@ -35,7 +33,8 @@ contract TestUniswap {
       path[2] = _tokenOut;
     }
 
-    IUniswapV2Router(UNISWAP_V2_ROUTER).swapExactTokensForTokens(
+
+    IUniswapV2Router(SUSHI_ROUTER).swapExactTokensForTokens(
       _amountIn,
       _amountOutMin,
       path,
@@ -63,7 +62,7 @@ contract TestUniswap {
 
     // same length as path
     uint[] memory amountOutMins =
-      IUniswapV2Router(UNISWAP_V2_ROUTER).getAmountsOut(_amountIn, path);
+      IUniswapV2Router(SUSHI_ROUTER).getAmountsOut(_amountIn, path);
 
     return amountOutMins[path.length - 1];
   }
